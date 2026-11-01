@@ -54,3 +54,10 @@ Red → Green → Refactor 순서로 진행한다. 구현은 테스트의 `expec
 - `TaskTable`(`src/components/tasks/TaskTable.tsx`)은 `{ tasks, onStatusChange(id, nextStatus) }`를 받는다. 각 행에 이름이 `상태 변경`인 버튼이 있고, 상태는 `pending → in_progress → completed → pending` 순으로 순환한다. 목록이 비면 `태스크가 없습니다`를 렌더링한다.
 - E2E 픽스처 사용자는 `e2e-test@example.com` / `test123456`이며, 테스트 전에 존재해야 한다.
 - `e2e/playwright.config.ts`의 `webServer`는 `../frontend`(5173)와 `../backend`(3000)를 `npm run dev`로 띄운다.
+
+# 코드 컨벤션
+
+- Typescript strict mode
+- 함수형 컴포넌트 + Hooks
+- 에러는 Zod 스키마로 검증
+- 한글 주석 허용
