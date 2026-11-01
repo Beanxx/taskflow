@@ -1,22 +1,22 @@
 import { useId, useState, type FormEvent } from 'react'
 import { EMAIL_PATTERN, ErrorMessage, inputClass, MIN_PASSWORD_LENGTH } from './FormField'
 
-export interface SignupCredentials {
+export interface RegisterCredentials {
   email: string
   password: string
 }
 
-interface SignupProps {
-  onSignup: (credentials: SignupCredentials) => void | Promise<void>
+interface RegisterProps {
+  onRegister: (credentials: RegisterCredentials) => void | Promise<void>
 }
 
-interface SignupValues extends SignupCredentials {
+interface RegisterValues extends RegisterCredentials {
   confirmPassword: string
 }
 
-type FieldErrors = Partial<Record<keyof SignupValues, string>>
+type FieldErrors = Partial<Record<keyof RegisterValues, string>>
 
-const validate = ({ email, password, confirmPassword }: SignupValues): FieldErrors => {
+const validate = ({ email, password, confirmPassword }: RegisterValues): FieldErrors => {
   const errors: FieldErrors = {}
 
   if (!email.trim()) errors.email = '이메일을 입력해주세요.'
@@ -33,16 +33,16 @@ const validate = ({ email, password, confirmPassword }: SignupValues): FieldErro
   return errors
 }
 
-export default function Signup({ onSignup }: SignupProps) {
+export default function Register({ onRegister }: RegisterProps) {
   const emailId = useId()
   const passwordId = useId()
   const confirmId = useId()
-  const [values, setValues] = useState<SignupValues>({ email: '', password: '', confirmPassword: '' })
+  const [values, setValues] = useState<RegisterValues>({ email: '', password: '', confirmPassword: '' })
   const [errors, setErrors] = useState<FieldErrors>({})
   const [formError, setFormError] = useState<string>()
   const [submitting, setSubmitting] = useState(false)
 
-  const handleChange = (field: keyof SignupValues, value: string) => {
+  const handleChange = (field: keyof RegisterValues, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }))
     setErrors((prev) => ({ ...prev, [field]: undefined }))
     setFormError(undefined)
@@ -59,7 +59,7 @@ export default function Signup({ onSignup }: SignupProps) {
     setSubmitting(true)
     setFormError(undefined)
     try {
-      await onSignup({ email: trimmed.email, password: trimmed.password })
+      await onRegister({ email: trimmed.email, password: trimmed.password })
     } catch (err) {
       setFormError(err instanceof Error ? err.message : '회원가입에 실패했습니다.')
     } finally {
@@ -69,7 +69,7 @@ export default function Signup({ onSignup }: SignupProps) {
 
   const field = (
     id: string,
-    key: keyof SignupValues,
+    key: keyof RegisterValues,
     label: string,
     type: string,
     autoComplete: string,

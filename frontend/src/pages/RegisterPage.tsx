@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Signup, { type SignupCredentials } from '../components/Signup'
+import Register, { type RegisterCredentials } from '../components/Register'
 import { register } from '../lib/auth'
 import AuthLayout from './AuthLayout'
 
-export default function SignupPage() {
+export default function RegisterPage() {
   const navigate = useNavigate()
 
-  const handleSignup = async (credentials: SignupCredentials) => {
+  const handleRegister = async (credentials: RegisterCredentials) => {
     await register(credentials)
     navigate('/dashboard')
   }
@@ -23,7 +23,7 @@ export default function SignupPage() {
         </>
       }
     >
-      <Signup onSignup={handleSignup} />
+      <Register onRegister={handleRegister} />
     </AuthLayout>
   )
 }
