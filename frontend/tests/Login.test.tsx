@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, test, it, expect } from "vitest";
+import { describe, test, expect, vi } from "vitest";
 import Login from "../src/components/Login";
 
 describe("Login Component", () => {
