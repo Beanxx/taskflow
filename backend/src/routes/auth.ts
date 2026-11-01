@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { z } from "zod";
 import { db } from "../db";
+import { jwtSecret } from "../config";
 import { users } from "../db/schema";
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
@@ -21,7 +22,7 @@ const loginSchema = z.object({
 const issueToken = (userId: number) =>
   sign(
     { userId, exp: Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS },
-    process.env.JWT_SECRET || "dev-secret",
+    jwtSecret(),
     "HS256",
   );
 
