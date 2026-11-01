@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom'
-import Signup from '../components/Signup'
+import { Link, useNavigate } from 'react-router-dom'
+import Signup, { type SignupCredentials } from '../components/Signup'
+import { register } from '../lib/auth'
 import AuthLayout from './AuthLayout'
 
 export default function SignupPage() {
-  // TODO: 백엔드 /api/auth/register 연동 (토큰 저장 후 /dashboard 이동)
-  const handleSignup = () => {}
+  const navigate = useNavigate()
+
+  const handleSignup = async (credentials: SignupCredentials) => {
+    await register(credentials)
+    navigate('/dashboard')
+  }
 
   return (
     <AuthLayout

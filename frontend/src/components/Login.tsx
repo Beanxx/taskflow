@@ -71,6 +71,7 @@ export default function Login({ onLogin }: LoginProps) {
         </label>
         <input
           id={emailId}
+          name="email"
           type="email"
           autoComplete="email"
           value={values.email}
@@ -88,6 +89,7 @@ export default function Login({ onLogin }: LoginProps) {
         </label>
         <input
           id={passwordId}
+          name="password"
           type="password"
           autoComplete="current-password"
           value={values.password}
@@ -100,7 +102,7 @@ export default function Login({ onLogin }: LoginProps) {
       </div>
 
       {formError && (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="error-message rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
           {formError}
         </p>
       )}

@@ -11,12 +11,12 @@ interface SignupProps {
 }
 
 interface SignupValues extends SignupCredentials {
-  passwordConfirm: string
+  confirmPassword: string
 }
 
 type FieldErrors = Partial<Record<keyof SignupValues, string>>
 
-const validate = ({ email, password, passwordConfirm }: SignupValues): FieldErrors => {
+const validate = ({ email, password, confirmPassword }: SignupValues): FieldErrors => {
   const errors: FieldErrors = {}
 
   if (!email.trim()) errors.email = '이메일을 입력해주세요.'
@@ -27,8 +27,8 @@ const validate = ({ email, password, passwordConfirm }: SignupValues): FieldErro
     errors.password = `비밀번호는 ${MIN_PASSWORD_LENGTH}자 이상이어야 합니다.`
   }
 
-  if (!passwordConfirm) errors.passwordConfirm = '비밀번호를 한 번 더 입력해주세요.'
-  else if (password !== passwordConfirm) errors.passwordConfirm = '비밀번호가 일치하지 않습니다.'
+  if (!confirmPassword) errors.confirmPassword = '비밀번호를 한 번 더 입력해주세요.'
+  else if (password !== confirmPassword) errors.confirmPassword = '비밀번호가 일치하지 않습니다.'
 
   return errors
 }
@@ -37,7 +37,7 @@ export default function Signup({ onSignup }: SignupProps) {
   const emailId = useId()
   const passwordId = useId()
   const confirmId = useId()
-  const [values, setValues] = useState<SignupValues>({ email: '', password: '', passwordConfirm: '' })
+  const [values, setValues] = useState<SignupValues>({ email: '', password: '', confirmPassword: '' })
   const [errors, setErrors] = useState<FieldErrors>({})
   const [formError, setFormError] = useState<string>()
   const [submitting, setSubmitting] = useState(false)
@@ -80,6 +80,7 @@ export default function Signup({ onSignup }: SignupProps) {
       </label>
       <input
         id={id}
+        name={key}
         type={type}
         autoComplete={autoComplete}
         value={values[key]}
@@ -100,10 +101,10 @@ export default function Signup({ onSignup }: SignupProps) {
     >
       {field(emailId, 'email', '이메일', 'email', 'email')}
       {field(passwordId, 'password', '비밀번호', 'password', 'new-password')}
-      {field(confirmId, 'passwordConfirm', '비밀번호 확인', 'password', 'new-password')}
+      {field(confirmId, 'confirmPassword', '비밀번호 확인', 'password', 'new-password')}
 
       {formError && (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="error-message rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
           {formError}
         </p>
       )}

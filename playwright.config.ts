@@ -24,10 +24,13 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'npm run dev',
+      // 매 실행마다 빈 DB로 시작해야 회원가입 시나리오가 중복 이메일로 실패하지 않는다.
+      command: 'rm -f e2e.db && npm run dev',
       cwd: './backend',
-      url: 'http://localhost:3000',
-      reuseExistingServer: !process.env.CI,
+      env: { DATABASE_URL: 'e2e.db' },
+      // 인증 없이 401을 돌려주는 경로로 기동 여부를 확인한다 (404는 준비 완료로 보지 않음).
+      url: 'http://localhost:3000/api/tasks',
+      reuseExistingServer: false,
     },
   ],
 })
