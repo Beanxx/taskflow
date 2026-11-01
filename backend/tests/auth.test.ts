@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeAll } from "vitest";
-// import app from "../src/app";
+import app from "../src/app";
 
 describe("POST /api/auth/register", () => {
   test("새 사용자를 등록하고 토큰을 반환한다", async () => {
@@ -9,7 +9,7 @@ describe("POST /api/auth/register", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "test@test.com",
+        email: "new@test.com",
         password: "password123",
       }),
     });
