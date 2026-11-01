@@ -33,8 +33,27 @@ describe("TaskTable Component", () => {
     // Assert
     expect(screen.getByText("태스크 1")).toBeInTheDocument();
     expect(screen.getByText("태스크 1")).toBeInTheDocument();
-    expect(screen.getByText("pending")).toBeInTheDocument();
-    expect(screen.getByText("completed")).toBeInTheDocument();
+    expect(screen.getByText("대기중")).toBeInTheDocument();
+    expect(screen.getByText("완료")).toBeInTheDocument();
+  });
+
+  test("상태 배지를 눌러 원하는 상태를 선택하면 onStatusChange를 호출한다", () => {
+    // Arrange
+    const mockOnStatusChange = vi.fn();
+    render(
+      <TaskTable
+        tasks={mockTasks}
+        onStatusChange={mockOnStatusChange}
+        onDelete={vi.fn()}
+      />,
+    );
+
+    // Act
+    fireEvent.click(screen.getByText("대기중"));
+    fireEvent.click(screen.getAllByRole("button", { name: "완료" })[0]);
+
+    // Assert
+    expect(mockOnStatusChange).toHaveBeenCalledWith(1, "completed");
   });
 
   test("상태 변경 클릭시 onStatusChange 콜백을 호출한다", () => {
